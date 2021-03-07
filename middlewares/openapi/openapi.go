@@ -32,19 +32,29 @@ type OpenAPI struct {
 
 // NewFromFile creates openapi validation middleware
 func NewFromFile(path string) (*OpenAPI, error) {
-	api := &OpenAPI{}
-
-	// load openapi spec
-	api.router = openapi3filter.NewRouter()
 	spec, err := openapi3.NewSwaggerLoader().LoadSwaggerFromFile(path)
-	api.spec = spec
 	if err != nil {
 		return nil, err
 	}
+	return newFromSpec(spec)
+}
+
+// NewFromData creates openapi validation middleware
+func NewFromData(data []byte) (*OpenAPI, error) {
+	spec, err := openapi3.NewSwaggerLoader().LoadSwaggerFromData(data)
+	if err != nil {
+		return nil, err
+	}
+	return newFromSpec(spec)
+}
+
+func newFromSpec(spec *openapi3.Swagger) (*OpenAPI, error) {
+	api := &OpenAPI{}
+	api.router = openapi3filter.NewRouter()
+	api.spec = spec
 	if err := api.router.AddSwagger(spec); err != nil {
 		return nil, err
 	}
-
 	return api, nil
 }
 
