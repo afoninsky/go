@@ -1,4 +1,4 @@
-package mux
+package auth
 
 import (
 	"net/http"
@@ -7,8 +7,8 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-// AuthMiddleware returns JWT authentication middleware (HS256)
-func AuthMiddleware(secret string) func(http.Handler) http.Handler {
+// JWTAuth returns JWT authentication middleware (HS256)
+func JWTAuth(secret string) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			parts := strings.Split(r.Header.Get("Authorization"), " ")
