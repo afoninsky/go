@@ -59,3 +59,9 @@ func (l *Logger) Middleware(next http.Handler) http.Handler {
 			Info(r.URL)
 	})
 }
+
+func (l *Logger) FatalIfError(err error) {
+	if err != nil {
+		l.Fatal(err)
+	}
+}
