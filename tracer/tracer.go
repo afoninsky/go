@@ -16,9 +16,9 @@ func InitJaeger(name, host, port string) func() {
 	// create and install Jaeger export pipeline.
 	flush, err := jaeger.InstallNewPipeline(
 		jaeger.WithAgentEndpoint(fmt.Sprintf("%s:%s", host, port)),
-		jaeger.WithProcess(jaeger.Process{
+		jaeger.Process{
 			ServiceName: name,
-		}),
+		},
 		jaeger.WithSDK(&sdktrace.Config{DefaultSampler: sdktrace.AlwaysSample()}),
 	)
 	if err != nil {

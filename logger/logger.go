@@ -33,13 +33,13 @@ func (l *Logger) WithContext(ctx context.Context) *logrus.Entry {
 	logger := l.Dup()
 
 	// add trace id from the context if it exists
-	span := trace.SpanFromContext(ctx)
-	traceID := span.SpanContext().TraceID
-	if traceID != nilTraceID {
-		logger = l.WithFields(logrus.Fields{
-			"trace": span.SpanContext().TraceID,
-		})
-	}
+	// span := trace.SpanFromContext(ctx)
+	// traceID := span.SpanContext().TraceID
+	// if traceID.String() != "" {
+	// 	logger = l.WithFields(logrus.Fields{
+	// 		"trace": span.SpanContext().TraceID,
+	// 	})
+	// }
 
 	return logger
 }

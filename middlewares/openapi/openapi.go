@@ -6,7 +6,8 @@ import (
 	"net/http"
 
 	"github.com/getkin/kin-openapi/openapi3"
-	"github.com/getkin/kin-openapi/openapi3filter"
+	// "github.com/getkin/kin-openapi/openapi3filter"
+	legacyrouter "github.com/getkin/kin-openapi/routers/legacy"
 )
 
 const specPath = "/spec.json"
@@ -27,7 +28,7 @@ const docTemplate = `
 // OpenAPI ...
 type OpenAPI struct {
 	spec   *openapi3.Swagger
-	router *openapi3filter.Router
+	router *legacyrouter.Router.
 }
 
 // NewFromFile creates openapi validation middleware
@@ -50,7 +51,7 @@ func NewFromData(data []byte) (*OpenAPI, error) {
 
 func newFromSpec(spec *openapi3.Swagger) (*OpenAPI, error) {
 	api := &OpenAPI{}
-	api.router = openapi3filter.NewRouter()
+	api.router = openapi3filter
 	api.spec = spec
 	if err := api.router.AddSwagger(spec); err != nil {
 		return nil, err
